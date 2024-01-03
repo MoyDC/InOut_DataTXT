@@ -1,10 +1,14 @@
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Diagnostics;
+using static System.Collections.Specialized.BitVector32;
 
 namespace GetDataTXT
 {
     public partial class Form1 : Form
     {
+        private RutaCarpeta rutaCarpeta = new RutaCarpeta();
+        private Seccion seccionA = new Seccion();
+
         public Form1()
         {
             InitializeComponent();
@@ -22,11 +26,35 @@ namespace GetDataTXT
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(folderDialog.SelectedPath))
                 {
                     // Actualiza el texto en el TextBox con la ruta seleccionada
-                    textRuta.Text = folderDialog.SelectedPath;
+                    //textRuta.Text = folderDialog.SelectedPath;
+                    rutaCarpeta.SetRuta(folderDialog.SelectedPath);
+                    textRuta.Text = rutaCarpeta.GetRuta;
                 }
 
 
-                try
+
+                seccionA.SetSeccion(rutaCarpeta.GetRuta, 0);
+                Debug.WriteLine(seccionA.ShowInfo());
+
+
+                seccionA.ReadArrays();
+
+                string[,] datosArray = null;
+                datosArray = seccionA.arrayTE;
+
+                for (int i = 0; i < datosArray.GetLength(0); i++)
+                {
+                    for (int j = 0; j < datosArray.GetLength(1); j++)
+                    {
+                        Debug.Write(datosArray[i, j] + " ");
+                    }
+                    Debug.WriteLine(""); // Nueva línea después de cada fila
+                }
+
+                // Mostrar información sobre la carpeta
+                //Debug.WriteLine(rutaCarpeta.ShowRuta());
+
+                /*try
                 {
                     // Ruta del archivo de texto
                     string rutaArchivo = "D:\\Moy\\Trabajos Moy\\Archivos de Moy\\Trabajo\\- 2D\\A\\LE.txt";
@@ -70,7 +98,7 @@ namespace GetDataTXT
                 catch (Exception ex)
                 {
                     Debug.WriteLine($"Error al leer el archivo: {ex.Message}");
-                }
+                }*/
 
             }
         }
