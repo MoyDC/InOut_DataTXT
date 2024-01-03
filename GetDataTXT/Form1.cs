@@ -1,3 +1,6 @@
+using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Diagnostics;
+
 namespace GetDataTXT
 {
     public partial class Form1 : Form
@@ -21,6 +24,54 @@ namespace GetDataTXT
                     // Actualiza el texto en el TextBox con la ruta seleccionada
                     textRuta.Text = folderDialog.SelectedPath;
                 }
+
+
+                try
+                {
+                    // Ruta del archivo de texto
+                    string rutaArchivo = "D:\\Moy\\Trabajos Moy\\Archivos de Moy\\Trabajo\\- 2D\\A\\LE.txt";
+
+                    // Lee todas las líneas del archivo
+                    string[] lineas = File.ReadAllLines(rutaArchivo);
+
+                    // Verifica si hay datos
+                    if (lineas.Length > 0)
+                    {
+                        // Divide cada línea en elementos utilizando el tabulador como separador
+                        string[][] datos = new string[lineas.Length][];
+                        for (int i = 0; i < lineas.Length; i++)
+                        {
+                            // Divide la línea en elementos utilizando el tabulador como separador
+                            datos[i] = lineas[i].Split('\t');
+                        }
+
+                        // Ahora, 'datos' es un array bidimensional que contiene los valores del archivo
+                        // Puedes acceder a los elementos utilizando indices, por ejemplo: datos[0][0]
+                        Debug.WriteLine("");
+                        Debug.Write("Datos array");
+                        Debug.WriteLine("");
+                        // Imprime los datos para verificar
+                        for (int i = 0; i < datos.Length; i++)
+                        {
+                            for (int j = 0; j < datos[i].Length; j++)
+                            {
+                                Debug.Write(datos[i][j] + " ");
+                            }
+                            Debug.WriteLine(""); // Nueva línea después de cada fila
+                        }
+
+                        Debug.WriteLine("Dato Elegido: " + datos[20][2]);
+                    }
+                    else
+                    {
+                        Debug.WriteLine("El archivo está vacío.");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error al leer el archivo: {ex.Message}");
+                }
+
             }
         }
 
