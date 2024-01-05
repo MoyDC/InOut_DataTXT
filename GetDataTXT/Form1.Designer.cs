@@ -32,9 +32,9 @@
             btnRutaCarpeta = new Button();
             textRuta = new TextBox();
             panelApagarPrender = new Panel();
+            textApagarPrender = new TextBox();
             panelBoton = new Panel();
             buttonApagarPrender = new Button();
-            textApagarPrender = new TextBox();
             panelPrincipal.SuspendLayout();
             panelApagarPrender.SuspendLayout();
             panelBoton.SuspendLayout();
@@ -77,6 +77,14 @@
             panelApagarPrender.Size = new Size(449, 189);
             panelApagarPrender.TabIndex = 1;
             // 
+            // textApagarPrender
+            // 
+            textApagarPrender.Location = new Point(140, 44);
+            textApagarPrender.Name = "textApagarPrender";
+            textApagarPrender.Size = new Size(125, 27);
+            textApagarPrender.TabIndex = 0;
+            textApagarPrender.Text = "Hola Mundo";
+            // 
             // panelBoton
             // 
             panelBoton.Controls.Add(buttonApagarPrender);
@@ -94,14 +102,6 @@
             buttonApagarPrender.Text = "Apagar";
             buttonApagarPrender.UseVisualStyleBackColor = true;
             buttonApagarPrender.Click += buttonApagarPrender_Click;
-            // 
-            // textApagarPrender
-            // 
-            textApagarPrender.Location = new Point(140, 44);
-            textApagarPrender.Name = "textApagarPrender";
-            textApagarPrender.Size = new Size(125, 27);
-            textApagarPrender.TabIndex = 0;
-            textApagarPrender.Text = "Hola Mundo";
             // 
             // Form1
             // 
