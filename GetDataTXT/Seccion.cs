@@ -34,19 +34,55 @@ namespace GetDataTXT
         }
 
         //Metodo para obtener la ruta de la seccion
-        private string GetRutaSeccion
+        public string GetRutaSeccion
         {
             get { return rutaCarpeta + "\\" + seccion; }
         }
 
+        //Metodo para comprobar si existen todos los archivos 
+        public bool AllFilesExist()
+        {
+            int i = 0;
+
+            if (!fileExists("LE.txt")) { i++; }
+            if (!fileExists("PS.txt")) { i++; }
+            if (!fileExists("TE.txt")) { i++; }
+            if (!fileExists("SS.txt")) { i++; }
+
+            if(i>0)
+            {
+                Debug.WriteLine("Missing files in Seccion '" + GetSeccion + "'");
+                Debug.WriteLine("       LE.txt Found? " + fileExists("LE.txt"));
+                Debug.WriteLine("       PS.txt Found? " + fileExists("PS.txt"));
+                Debug.WriteLine("       TE.txt Found? " + fileExists("TE.txt"));
+                Debug.WriteLine("       SS.txt Found? " + fileExists("SS.txt"));
+                return false;
+            }
+            else
+            {
+                Debug.WriteLine("All the files exist in Seccion '" + GetSeccion + "'");
+                return true;
+            } 
+        }
+        //Metodo para comprobar si existen un archivo
+        private bool fileExists (string fileTXT)
+        {
+            string rutaCompleta = GetRutaSeccion + "\\" + fileTXT;
+            //Debug.WriteLine(rutaCompleta + ": " + File.Exists(rutaCompleta));
+            return File.Exists(rutaCompleta);
+        }
+
+
+
+
 
         //Metodo para leer los arrays
-        public void ReadArrays()
+        public void ReadTXTFiles()
         {
-            resultadoArraLE = ObtenerArray(GetRutaSeccion, "LE.txt");
-            resultadoArraPS = ObtenerArray(GetRutaSeccion, "PS.txt");
-            resultadoArraTE = ObtenerArray(GetRutaSeccion, "TE.txt");
-            resultadoArraSS = ObtenerArray(GetRutaSeccion, "SS.txt");
+            resultadoArraLE = ObtenerTXTArray(GetRutaSeccion, "LE.txt");
+            resultadoArraPS = ObtenerTXTArray(GetRutaSeccion, "PS.txt");
+            resultadoArraTE = ObtenerTXTArray(GetRutaSeccion, "TE.txt");
+            resultadoArraSS = ObtenerTXTArray(GetRutaSeccion, "SS.txt");
         }
 
         //Metodo para obtener los datos de cada uno de los array
@@ -67,14 +103,14 @@ namespace GetDataTXT
             get { return resultadoArraSS; }
         }
 
-        //Metodo para leer el archvio de texto de los datos
-        private string[,] ObtenerArray(string rutaArray, string archivoLeer)
+        //Metodo para leer el archvio de texto de los datos y guardar los datos en un array
+        private string[,] ObtenerTXTArray(string rutaArray, string archivoLeer)
         {
             string[,] datos = null;
 
-            Debug.WriteLine("");
+            //Debug.WriteLine("");
             string rutaCompletaArray = rutaArray + "\\" + archivoLeer;
-            Debug.WriteLine("Ruta del array: " + rutaCompletaArray);
+            //Debug.WriteLine("Ruta del array a leer: " + rutaCompletaArray);
 
             try
             {
@@ -102,19 +138,6 @@ namespace GetDataTXT
                             datos[i, j] = elementos[j];
                         }
                     }
-
-                    // Imprime los datos para verificar
-                    /*for (int i = 0; i < datos.GetLength(0); i++)
-                    {
-                        for (int j = 0; j < datos.GetLength(1); j++)
-                        {
-                            Debug.Write(datos[i, j] + " ");
-                        }
-                        Debug.WriteLine(""); // Nueva línea después de cada fila
-                    }
-
-                    Debug.WriteLine("Dato Elegido: " + datos[20, 2]);
-                    */
                 }
                 else
                 {
